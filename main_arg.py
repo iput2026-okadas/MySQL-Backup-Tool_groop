@@ -147,6 +147,7 @@ S3_BUCKET=
     # but the class must recieve 1 table name
     # 1 instance for 1 table thus multiprocessing for each tables
 
+    directory = args.directory
 
     # to s3
     if args.s3:
@@ -184,6 +185,7 @@ S3_BUCKET=
                 schema_work = SchemaExport(
                     config=config,
                     table=t,
+                    directory=directory,
                 )
                 work.append(schema_work)
         elif args.schema_no_data:
@@ -191,6 +193,8 @@ S3_BUCKET=
                 schema_work = SchemaExport(
                     config=config,
                     table=t,
+                    directory=directory,
+                    no_data=True,
                 )
                 work.append(schema_work)
         else: None

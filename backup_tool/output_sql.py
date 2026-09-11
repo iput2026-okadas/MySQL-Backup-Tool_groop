@@ -2,6 +2,7 @@
 # libraries
 from decimal import Decimal
 from datetime import datetime, date, time, timedelta
+import os
 
 # self-implementations
 from backup_tool.mysql_source import MySQLSource
@@ -12,19 +13,22 @@ class SchemaExport(MySQLSource):
             self,
             config,
             table,
+            directory,
             no_data=False,
         ):
         super().__init__(
             config,
         )
         self._table = table
+        self._directory = directory
         self._no_data = no_data
     
     def do_output(self):
 
         self.debug(f"parse table: {self._table} into .sql")
+        os.makedirs(f"{self._directory}/schema", exist_ok=True)
         with open(
-            f"backup-output2/schema/{self._table}.sql",
+            f"{self._directory}/schema/{self._table}.sql",
             "w", encoding='utf-8'
         ) as f:
             f.write("\n")
