@@ -23,6 +23,7 @@ import json
 import shutil
 import zipfile
 
+"""
 
 # 接続設定
 config = {
@@ -31,6 +32,36 @@ config = {
     'password': '0426',
     'charset': 'utf8mb4'
 }
+"""
+
+#本人のデータに合わせる
+# プレイヤーに接続情報を入力させる
+print("--- MySQLの接続情報を入力してください ---")
+config = {
+    'host': input("ホスト名 (例: localhost): ") or "localhost",
+    'user': input("ユーザー名: "),
+    'password': input("パスワード: "),
+    'charset': input("型指定: ")
+}
+
+try:
+    print("\nデータベースに接続中...")
+    conn = mysql.connector.connect(**config)
+    cursor = conn.cursor()
+    
+    # 接続確認用のテストクエリ
+    cursor.execute("SELECT VERSION()")
+    print("成功! MySQL Version:", cursor.fetchone()[0]+"\n")
+    
+except mysql.connector.Error as err:
+    print(f"\n[エラー] 接続に失敗しました: {err}")
+finally:
+    if 'cursor' in locals() and cursor:
+        cursor.close()
+    if 'conn' in locals() and conn.is_connected():
+        conn.close()
+
+
 
 try:
     # 接続
@@ -54,7 +85,6 @@ try:
 
     # スクリプトの場所を基準にする
     BASE_DIR = Path(__file__).resolve().parent.parent
-
     OUTPUT_DIR = BASE_DIR / "backup-output2"
     DATA_DIR = OUTPUT_DIR / "data"
     SCHEMA_DIR = OUTPUT_DIR / "schema"
@@ -79,10 +109,7 @@ try:
     for i in range(len(tables_list)):
         cursor = connection.cursor()
         cursor.execute(f"SELECT * FROM {tables_list[i]};")
-        with open(DATA_DIR / f"{tables_list[i]}.csv",
-          'w',
-          newline='',
-          encoding='utf-8') as csvfile:
+        with open(DATA_DIR / f"{tables_list[i]}.csv",'w',newline='',encoding='utf-8') as csvfile:
 
             writer = csv.writer(csvfile)
 
@@ -140,17 +167,20 @@ for database in databases:
     print(database[0])
 
 
+# MySQLのバージョン取得
+cursor = connection.cursor()
+cursor.execute("SELECT VERSION();")
+version = cursor.fetchone()
+
+print("MySQL Version:", version[0],"\n")
     
 #バックアップ情報を格納する辞書を作成
 backup_info = {
     "テーブルリスト": tables_list,
-    "tables": [],
     "バックアップ日時:": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "MySQL Version": "MySQL Version: " ,
+    "MySQL Version": "MySQL Version: "+version[0] ,
     "ファイルサイズ": {f"{table}.csv": f"{os.path.getsize(Path(__file__).parent.parent / 'backup-output2' / 'data' / f'{table}.csv')} bytes"for table in tables_list },
     "データベース一覧": [database[0] for database in databases],
-
-
 }
 
 #jsonファイルに書き込み
@@ -186,12 +216,3 @@ try:
 
 except Error as e:
     print(f"エラー: {e}")
-
-
-
-
-
-
-
-
-

@@ -4,8 +4,9 @@
         "users",
         "users_sample"
     ],
-    "バックアップ日時:": "2026-09-14 09:58:06",
-    "MySQL Version": "MySQL Version: 8.0.46",
+    "tables": [],
+    "バックアップ日時:": "2026-09-11 10:20:48",
+    "MySQL Version": "MySQL Version: ",
     "ファイルサイズ": {
         "orders.csv": "92 bytes",
         "users.csv": "274 bytes",
