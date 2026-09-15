@@ -259,7 +259,6 @@ S3_BUCKET=
             s3_config= s3_config,
             output_dir= directory,
         )
-        pass
     
 
 def func(w: MySQLSource):
