@@ -360,7 +360,7 @@ class MySQLSource:
         """
         supposed to be called in multiprocessing on main code\n
         make inheritance class for any output target and give this function specific process\n
-        should recieve 1 table name or any target own pramater\n
+        instance should recieve 1 table name or any target own pramater\n
         not to try call connect()/close() -- main function call them
         """
         print()
