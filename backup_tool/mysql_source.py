@@ -51,6 +51,14 @@ class MySQLSource:
                 use_unicode=True,
                 autocommit=False,
             )
+
+            self._connection.autocommit = False
+            cursor = self._connection.cursor()
+            
+            cursor.execute("SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;")
+            cursor.execute("START TRANSACTION;")
+
+            
         except Exception as e:
             print(e)
 
@@ -59,6 +67,8 @@ class MySQLSource:
         """MySQL接続を閉じる。"""
         if self._connection is None:
             return
+
+        self._connection.commit()
 
         if self._connection.is_connected():
             self._connection.close()
