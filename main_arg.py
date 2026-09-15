@@ -8,7 +8,10 @@ import os
 # self-implementations
 from backup_tool.mysql_source import MySQLSource
 from backup_tool.config import load_mysql_config, load_aws_config
+
 from backup_tool.output_sql import SchemaExport
+from backup_tool.output_csv import CsvExport
+
 from backup_tool.s3_upload_func import s3_multipart_upload
 from backup_tool.s3_source import S3Source
 
@@ -190,15 +193,7 @@ S3_BUCKET=
     # to local
     else:
         # whether do schema
-        if args.schema:
-            for t in tables_ok:
-                schema_work = SchemaExport(
-                    config=config,
-                    table=t,
-                    directory=directory,
-                )
-                work.append(schema_work)
-        elif args.schema_no_data:
+        if args.schema_no_data:
             for t in tables_ok:
                 schema_work = SchemaExport(
                     config=config,
@@ -207,7 +202,14 @@ S3_BUCKET=
                     no_data=True,
                 )
                 work.append(schema_work)
-        else: None
+        else:
+            for t in tables_ok:
+                schema_work = SchemaExport(
+                    config=config,
+                    table=t,
+                    directory=directory,
+                )
+                work.append(schema_work)
 
         # whether do plains
         plain = args.output_types
@@ -218,7 +220,11 @@ S3_BUCKET=
                 match p:
                     case "csv" | ".csv":
                         for t in tables_ok:
-                            csv_work = "TODO" # TODO
+                            csv_work = CsvExport(
+                                config=config,
+                                table=t,
+                                directory=directory,
+                            )
                             work.append(csv_work)
                     #case "txt" | ".txt":
                         # todo implement txt process here
