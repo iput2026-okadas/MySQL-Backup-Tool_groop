@@ -13,7 +13,7 @@ from backup_tool.s3_upload_func import s3_multipart_upload
 from backup_tool.s3_source import S3Source
 
 # command example below
-# python .\main_arg.py -schema -output-types csv -settings-path settings.env
+# python main_arg.py backup -schema-no-data -s3 -output-dir test11
 
 def main():
 # definitions
