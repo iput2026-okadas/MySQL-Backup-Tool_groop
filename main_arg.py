@@ -14,6 +14,7 @@ from backup_tool.output_csv import CsvExport
 
 from backup_tool.s3_upload_func import s3_multipart_upload
 from backup_tool.s3_source import S3Source
+from backup_tool.local_to_s3_zip import local_to_s3_zip
 
 # command example below
 # python main_arg.py backup -schema-no-data -s3 -output-dir test11
@@ -159,7 +160,9 @@ S3_BUCKET=
 
     # to s3
     if args.s3:
-        s3_config = load_aws_config()
+        s3_config = load_aws_config(
+            setting_file_path=args.settings_path,
+        )
         s3_source = S3Source(
             mysql_config=config,
             s3_config=s3_config,
@@ -247,8 +250,15 @@ S3_BUCKET=
         # TODO zip function here
         pass
     elif (not args.s3) and args.local_s3:
-        # TODO zip into both local and s3 so can use transfer
-        # transfer with zipping here
+        # TODO zip function here
+        
+        s3_config = load_aws_config(
+            setting_file_path=args.settings_path,
+        )
+        local_to_s3_zip(
+            s3_config= s3_config,
+            output_dir= directory,
+        )
         pass
     
 

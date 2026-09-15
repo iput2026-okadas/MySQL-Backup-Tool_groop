@@ -91,12 +91,14 @@ class AWSConfig:
     bucket: str
 
 
-def load_aws_config() -> AWSConfig:
+def load_aws_config(
+        setting_file_path: str = ".env",
+    ) -> AWSConfig:
     """
     .envまたは環境変数からAWS設定を読み込む。
     """
 
-    load_dotenv()
+    load_dotenv(dotenv_path=setting_file_path)
 
     required_names = [
         "AWS_PROFILE",
