@@ -6,3 +6,4 @@ INSERT INTO users VALUES (11, 'ダブル"クォート', 'quote@example.com');
 INSERT INTO users VALUES (12, '改行
 テスト', 'newline@example.com');
 INSERT INTO users VALUES (13, 'テストユーザー', 'test@example.com');
+INSERT INTO users VALUES (14, 'NULLMAN', 'NULL');

@@ -7,3 +7,4 @@ id,name,email
 12,"改行
 テスト",newline@example.com
 13,テストユーザー,test@example.com
+14,NULLMAN,NULL
