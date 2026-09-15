@@ -138,7 +138,8 @@ try:
         print(e)
 
 
-    #テーブル指定を自動化するためにリストを使用し割り当てる
+    #テーブル指定を自動化するためにリストを使
+    # 用し割り当てる
     tables_numbers = len(tables_list)
     
     # スクリプトの場所を基準にする
@@ -251,7 +252,7 @@ backup_info = {
 
 #jsonファイルに書き込み
 Jsona=input("jsonファイルの名称を決めてください")or "manifest.json"
-with open(OUTPUT_DIR / "Jsona", "w",encoding="utf-8") as jsonfile:
+with open(OUTPUT_DIR / Jsona, "w",encoding="utf-8") as jsonfile:
     json.dump(backup_info, jsonfile, ensure_ascii=False, indent=4)
 
 print("jsonファイル名は"+Jsona+"です。"+"\n"+"バックアップ情報をJSONファイルに書き込みました。"+"\n")

@@ -7,7 +7,6 @@ import boto3
 from backup_tool.mysql_source import MySQLSource
 from backup_tool.config import AWSConfig
 
-
 class S3Source(MySQLSource):
 
     def __init__(
