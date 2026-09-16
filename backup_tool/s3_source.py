@@ -49,6 +49,7 @@ class S3Source(MySQLSource):
             body,
         ):
         try:
+
             res = self._s3.upload_part(
                 Key=self._target_file,
                 Bucket=self._s3_config.bucket,
@@ -68,6 +69,7 @@ class S3Source(MySQLSource):
         self,
     ) -> None:
         try:
+
             self._s3.complete_multipart_upload(
                 Key=self._target_file,
                 Bucket=self._s3_config.bucket,
@@ -76,6 +78,7 @@ class S3Source(MySQLSource):
             )
 
         except Exception as e:
+            self._abort()
             print(e)
 
         finally:
@@ -85,11 +88,12 @@ class S3Source(MySQLSource):
         self,
     ) -> None:
         try:
+
             self._s3.abort_multipart_upload(
                 Key=self._target_file,
                 Bucket=self._s3_config.bucket,
                 UploadId=self._upload_id,
             )
-
+            
         except Exception as e:
             print(e)
