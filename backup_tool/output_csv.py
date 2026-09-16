@@ -1,5 +1,8 @@
 
 # libraries
+from decimal import Decimal
+from datetime import datetime, date, time, timedelta
+
 import os
 import csv
 from pathlib import Path
@@ -23,7 +26,7 @@ class CsvExport(MySQLSource):
     
     def do_output(self):
 
-    # this impl is cpied from 'pushSample_csv&&dump.py'
+    # this impl is copied from 'pushSample_csv&&dump.py'
     # of lines kinda 144 ~ 187
         os.makedirs(f"{self._directory}/data", exist_ok=True)
         with open(
@@ -40,6 +43,19 @@ class CsvExport(MySQLSource):
             for raw_iter in self.iter_row_batches(self._table):
                 for it in raw_iter:
                     self.debug(it)
-                    writer.writerow(it)
-                
+
+                    line = []
+                    for index, i in enumerate(it):
+                        print(i)
+                        if i == None:
+                            line.append("NULL")
+                        elif isinstance(i, (int, float, bytes, bytearray, Decimal)):
+                            line.append(str(i))
+                        elif isinstance(i, (datetime, date, time, timedelta)):
+                            line.append(repr(str(i)))
+                        else:
+                            line.append(repr(i))
+                    print(line)
+                    writer.writerow(line)
+
                 self.debug(f"{self._table}テーブルのデータをCSVファイルに書き込みました。")

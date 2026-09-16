@@ -1,0 +1,14 @@
+{
+    "database": "restore_test",
+    "tables": [
+        "users",
+        "orders"
+    ],
+    "backuped_at:": "2026-09-14 15:24:49",
+    "mysql_server_version": "26.7.0",
+    "file_sizes": {
+        "orders.csv": "2717 bytes",
+        "users.csv": "274 bytes",
+        "users_sample.csv": "16 bytes"
+    }
+}
