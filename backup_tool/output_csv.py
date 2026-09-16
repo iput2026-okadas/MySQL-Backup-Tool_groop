@@ -36,7 +36,8 @@ class CsvExport(MySQLSource):
             writer.writerow(column_names)
 
             for raw_iter in self.iter_row_batches(self._table):
-                self.debug(raw_iter[0])
-                writer.writerow(raw_iter[0])
+                for it in raw_iter:
+                    self.debug(it)
+                    writer.writerow(it)
                 
                 self.debug(f"{self._table}テーブルのデータをCSVファイルに書き込みました。")
