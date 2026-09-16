@@ -32,8 +32,10 @@ class CsvExport(MySQLSource):
         ) as csvfile:
             writer = csv.writer(csvfile)
 
-            column_names = self.get_column_types(table_name=self._table)
+            column_names = self.get_column_names(table_name=self._table)
             writer.writerow(column_names)
+            column_types = self.get_column_types(table_name=self._table)
+            writer.writerow(column_types)
 
             for raw_iter in self.iter_row_batches(self._table):
                 for it in raw_iter:
