@@ -1,4 +1,5 @@
 id,name,email
+bigint unsigned,varchar(100),varchar(255)
 7,山田太郎,taro@example.com
 8,Suzuki,suzuki@example.com
 9,,empty@example.com
@@ -7,3 +8,4 @@ id,name,email
 12,"改行
 テスト",newline@example.com
 13,テストユーザー,test@example.com
+14,NULLMAN,NULL

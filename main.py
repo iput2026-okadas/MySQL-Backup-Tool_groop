@@ -5,7 +5,7 @@ from backup_tool.mysql_source import MySQLSource
 def main():
     config = load_mysql_config()
 
-    with MySQLSource(config) as source:
+    with MySQLSource(config, True) as source:
         print("MySQL connection OK")
         print(f"MySQL version: {source.get_server_version()}")
 

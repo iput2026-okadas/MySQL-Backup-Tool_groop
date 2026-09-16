@@ -22,7 +22,10 @@
 --   - JSON
 --   - Foreign Key
 -- ============================================================
-
+SELECT
+    @@character_set_client,
+    @@character_set_connection,
+    @@character_set_results;
 
 -- ------------------------------------------------------------
 -- 既存DBがあれば削除
@@ -79,6 +82,7 @@ CREATE TABLE orders (
     price DECIMAL(10, 2) NOT NULL,
     metadata JSON NULL,
     created_at DATETIME NOT NULL,
+    ifnot BOOLEAN NOT NULL,
 
     PRIMARY KEY (id),
     KEY idx_orders_user_id (user_id),
@@ -91,6 +95,406 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci
 COMMENT = '注文テーブル';
+
+CREATE TABLE aaaaa (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE bbbbb (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE ccccc (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE ddddd (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE eeeee (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE fffff (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE ggggg (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE hhhhh (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE iiiii (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE jjjjj (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE kkkkk (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE lllll (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE mmmmm (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE nnnnn (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE ooooo (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE ppppp (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE qqqqq (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE rrrrr (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE sssss (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
+
+CREATE TABLE ttttt (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    birthday DATE NULL,
+    score DECIMAL(10, 2) NULL,
+    profile TEXT NULL,
+    created_at DATETIME(6) NOT NULL,
+    note VARCHAR(255) NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_email (email)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = '利用者テーブル';
+
+
 
 
 -- ------------------------------------------------------------
@@ -145,7 +549,8 @@ INSERT INTO orders (
     product_name,
     price,
     metadata,
-    created_at
+    created_at,
+    ifnot
 )
 VALUES
 (
@@ -156,7 +561,8 @@ VALUES
         'color', 'blue',
         'count', 2
     ),
-    '2026-09-01 11:00:00'
+    '2026-09-01 11:00:00',
+    TRUE
 ),
 (
     1,
@@ -165,15 +571,797 @@ VALUES
     JSON_OBJECT(
         'color', 'black'
     ),
-    '2026-09-01 11:05:00'
+    '2026-09-01 11:05:00',
+    FALSE
 ),
 (
     2,
     '定規, 30cm',
     300.00,
     NULL,
-    '2026-09-01 11:10:00'
+    '2026-09-01 11:10:00',
+    FALSE
 );
+
+INSERT INTO aaaaa (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO bbbbb (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO ccccc (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO ddddd (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO eeeee (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO fffff (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO ggggg (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO hhhhh (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO iiiii (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO jjjjj (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO kkkkk (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO lllll (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO mmmmm (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO nnnnn (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO ooooo (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO ppppp (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO qqqqq (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO rrrrr (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO sssss (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
+
+INSERT INTO ttttt (
+    name,
+    email,
+    birthday,
+    score,
+    profile,
+    created_at,
+    note
+)
+VALUES
+(
+    '田中 太郎',
+    'tanaka@example.com',
+    '2000-01-01',
+    92.50,
+    CONCAT('1行目', CHAR(10), '2行目'),
+    '2026-09-01 09:00:00.123456',
+    NULL
+),
+(
+    '鈴木 "花子"',
+    'suzuki@example.com',
+    NULL,
+    80.00,
+    '東京, 横浜',
+    '2026-09-01 09:05:10.654321',
+    ''
+),
+(
+    '佐藤 次郎',
+    'sato@example.com',
+    '1998-05-15',
+    NULL,
+    '通常のプロフィール',
+    '2026-09-01 10:30:00.000001',
+    '備考あり'
+);
+
 
 
 -- ------------------------------------------------------------
