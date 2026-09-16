@@ -5,67 +5,9 @@ from datetime import datetime, date, time, timedelta
 
 import io
 import zipfile
-import csv
-from pathlib import Path
 
 # self-implementations
 from backup_tool.s3_source import S3Source
-from mysql.connector import Error
-
-
-tables_list = []
-try:
-    def iter_row_batches(
-            connection,
-            table_name: str,
-                batch_size: int = 2 ):
-        tables_numbers = len(tables_list)
-        # スクリプトの場所を基準にする
-        BASE_DIR = Path(__file__).resolve().parent.parent
-        OUTPUT_DIR = BASE_DIR / "backup-output2"
-        DATA_DIR = OUTPUT_DIR / "data"
-        SCHEMA_DIR = OUTPUT_DIR / "schema"
-
-        for batch in iter_row_batches(
-                    connection,
-                    table_name="orders",
-                    batch_size=10):
-                    for row in batch:
-                        print(row)
-        # csvファイルに書き込み
-        counter=0
-        i=len(batch)    
-        for i in range(len(tables_list)):
-            cursor = connection.cursor()
-            cursor.execute(f"SELECT * FROM {tables_list[i]};")
-            
-            with open(DATA_DIR / f"{tables_list[i]}.csv",'w',newline='',encoding='utf-8') as csvfile:
-            
-                writer = csv.writer(csvfile)
-
-                writer.writerow([p[0] for p in cursor.description])
-
-                for row in cursor:
-                        #ここに10件ごとにcsv化
-                        counter=counter+1
-                        writer.writerow(row)
-                        
-                        #time.sleep(1)
-                        print(f"{tables_list[i]}テーブルのデータをCSVファイルに書き込みました。")
-                        #ここにzip化するコードを作成する
-                print(counter)   
-            cursor.close()
-
-            #csv
-            directory_csv_path = str(OUTPUT_DIR)
-
-            zip_file_csv_path = str(BASE_DIR / "backup-output")
-
-except Error as e:
-    print(f"エラー: {e}")
-
-    
-
 
 
 def s3_multipart_upload(
@@ -144,12 +86,27 @@ def s3_multipart_upload(
                         body=buffer.getvalue(),
                     )
                     buffer.seek(0)
+                
+        # csv
+            if "csv" in plains:
+                source.debug(f"parse data: {t} into .csv")
 
-        # last buffer uploaded here
+                target_file = f"younameit"
+                with zf.open(
+                    target_file, mode="w"
+                ) as f:
+                    # TODO csv output process for a single table
+                    pass
+
+
+
+
+
+
+    # last buffer uploaded here
     source._upload_part(
         body=buffer.getvalue()
     )
 
     source._complete_upload()
     source.close()
-                
