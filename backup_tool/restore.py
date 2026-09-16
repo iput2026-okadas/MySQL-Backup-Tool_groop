@@ -41,13 +41,13 @@ def restore_from_manifest(
     # it makes me code em indivisually, gimme a break :(
     # ohhhh dizzy
         is_zip = rstr_from.endswith(".zip")
-        
+
         if is_zip: # from local zip
             with zipfile.ZipFile(
                 rstr_from, mode="r"
             ) as zf:
                 with zf.open(
-                    "manifest.json", mode="r"
+                    "test.json", mode="r"
                 ) as jf:
                     mnfst_json = json.load(jf)
 
@@ -103,7 +103,7 @@ create database {database_name}
 
         else: # from local (non zip)
             with open(
-                f"{rstr_from}/manifest.json",
+                f"{rstr_from}/test.json",
                 mode="r", encoding='utf-8'
             ) as jf:
                 mnfst_json = json.load(jf)
