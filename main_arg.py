@@ -39,6 +39,7 @@ def main():
         ["-settings-path", ".mysql-backup/settings.env", None, "by default: .mysql-backup/settings.env"],
     ]
 
+
 # initializes
     parser = argparse.ArgumentParser(
         description="""
