@@ -1,3 +1,4 @@
+
 import boto3
 # https://dev.classmethod.jp/articles/try-boto3-stubs/
 # for type hint in vscode

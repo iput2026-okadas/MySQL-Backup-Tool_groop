@@ -6,10 +6,13 @@ from mysql.connector import Error
 import io
 import zipfile
 import csv
-
+import json
 # self-implementations
 from backup_tool.s3_source import S3Source
+import mysql.connector
 
+import os
+from dotenv import load_dotenv
 
 def s3_multipart_upload(
     source: S3Source,
@@ -122,6 +125,44 @@ def s3_multipart_upload(
                         source._upload_part(
                             body=buffer.getvalue(),
                         )
+
+            #json
+            source.debug("parse manifest.json")
+            
+            target_file = "manifest.json"
+            load_dotenv("settings.env")
+
+            config = {
+                "host": os.getenv("MYSQL_HOST"),
+                "port": int(os.getenv("MYSQL_PORT")),
+                "user": os.getenv("MYSQL_USER"),
+                "password": os.getenv("MYSQL_PASSWORD"),
+                "database": os.getenv("MYSQL_DATABASE"),
+            }
+
+            connection = mysql.connector.connect(**config)
+            cursor = connection.cursor()
+            cursor.execute("SELECT VERSION();")
+            version = cursor.fetchone()
+
+            manifest = {
+                "tables": tables,
+                "sql_files": [f"schema/{t}.sql" for t in tables],
+                "csv_files": [f"data/{t}.csv" for t in tables],
+                "バックアップ日時:": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "MySQL Version": "MySQL Version: "+version[0] ,
+            }
+
+            with zf.open(target_file, mode="w") as f:
+                json_str = json.dumps(
+                    manifest,
+                    ensure_ascii=False,
+                    indent=2
+                )
+
+                f.write(json_str.encode("utf-8"))   
+
+
 
         source._upload_part(
                 body=buffer.getvalue()

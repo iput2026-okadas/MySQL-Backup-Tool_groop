@@ -4,7 +4,7 @@ import argparse
 from multiprocessing import Pool, cpu_count
 import os
 #import time
-
+import zipfile
 # self-implementations
 from backup_tool.mysql_source import MySQLSource
 from backup_tool.config import load_mysql_config, load_aws_config
@@ -18,7 +18,10 @@ from backup_tool.local_to_s3_zip import local_to_s3_zip
 
 # command example below
 # python main_arg.py backup -schema-no-data -s3 -output-dir test11
-
+"""
+・ローカル保存可
+ python main_arg.py backup -zip -output-dir test11
+"""
 def main():
 # definitions
     requirements = [ # name, default, description
@@ -245,8 +248,33 @@ S3_BUCKET=
     # local process ends here
 
     # zip
+    print("args.s3 =", args.s3)
+    print("args.zip =", args.zip)
+    print("directory =", directory)
+
     if (not args.s3) and args.zip:
-        # TODO zip function here
+        zip_path = f"{directory}.zip"
+
+        with zipfile.ZipFile(
+            zip_path,
+            "w",
+            compression=zipfile.ZIP_DEFLATED
+        ) as zf:
+            print("zip読み込み")
+
+            for root, dirs, files in os.walk(directory):
+                for file in files:
+                    full_path = os.path.join(root, file)
+
+                    zf.write(
+                        full_path,
+                        arcname=os.path.relpath(
+                            full_path,
+                            directory
+                        )
+                    )
+
+        print(f"Created {zip_path}")
         pass
     elif (not args.s3) and args.local_s3:
         # TODO zip function here
