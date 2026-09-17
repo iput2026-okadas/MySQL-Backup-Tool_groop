@@ -5,6 +5,7 @@ from multiprocessing import Pool, cpu_count
 import os
 #import time
 import zipfile
+
 # self-implementations
 from backup_tool.restore import restore_from_manifest
 
@@ -31,7 +32,7 @@ def main():
     ]
     flags = [ # name, description
         ["-debug", "show debug massages"],
-        ["-schema-no-data", "output schema with only structure info"],
+        ["-schema-with-data", "output schema with INSERT sentences"],
         ["-zip", "output in zipping"],
         ["-s3", "output into s3 with zipping"],
         ["-local-s3", "output into both local and s3 with zipping "],
@@ -201,31 +202,30 @@ S3_BUCKET=
                 case _:
                     print("error: invalid value on output types")
         # multi part upload
-        if args.schema_no_data:
+        if args.schema_with_data:
             s3_multipart_upload(
                 source=s3_source,
                 tables=tables_ok,
                 plains=plain,
-                sql_no_data=True,
             )
         else:
             s3_multipart_upload(
                 source=s3_source,
                 tables=tables_ok,
                 plains=plain,
+                sql_no_data=True,
             )
     # s3 process ends here
     
     # to local
     else:
         # whether do schema
-        if args.schema_no_data:
+        if args.schema_with_data:
             for t in tables_ok:
                 schema_work = SchemaExport(
                     config=config,
                     table=t,
                     directory=directory,
-                    no_data=True,
                 )
                 work.append(schema_work)
         else:
@@ -234,6 +234,7 @@ S3_BUCKET=
                     config=config,
                     table=t,
                     directory=directory,
+                    no_data=True,
                 )
                 work.append(schema_work)
 
