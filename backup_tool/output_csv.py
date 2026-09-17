@@ -46,7 +46,6 @@ class CsvExport(MySQLSource):
 
                     line = []
                     for index, i in enumerate(it):
-                        print(i)
                         if i == None:
                             line.append("NULL")
                         elif isinstance(i, (int, float, bytes, bytearray, Decimal)):
@@ -55,7 +54,7 @@ class CsvExport(MySQLSource):
                             line.append(repr(str(i)))
                         else:
                             line.append(repr(i))
-                    print(line)
                     writer.writerow(line)
 
-                self.debug(f"{self._table}テーブルのデータをCSVファイルに書き込みました。")
+
+        self.debug(f"backup data for the {self._table} finished")
