@@ -271,6 +271,7 @@ def zip_directory(source_dir, output_zip):
     shutil.make_archive(output_zip, 'zip', root_dir=source_dir)
     print(f"ZIPファイルを作成しました: {output_zip}.zip"+"\n")
 
+
 #csv
 directory_csv_path = str(OUTPUT_DIR)
 

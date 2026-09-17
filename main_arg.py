@@ -267,10 +267,10 @@ S3_BUCKET=
     # local process ends here
 
     # zip
-    print("args.s3 =", args.s3)
+    """print("args.s3 =", args.s3)
     print("args.zip =", args.zip)
-    print("directory =", directory)
-
+    print("directory =", directory)"""
+    
     if (not args.s3) and args.zip:
         zip_path = f"{directory}.zip"
 
