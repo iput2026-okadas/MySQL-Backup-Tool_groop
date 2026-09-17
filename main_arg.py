@@ -109,9 +109,11 @@ S3_BUCKET=
 """)
             with open(
                 ".gitignore",
-                "a", encoding="utf-8"
+                mode="r+", encoding="utf-8"
             ) as gi:
-                gi.writelines(".mysql-backup")
+                content = gi.read()
+                if not ".mysql-backup" in content:
+                    gi.writelines("\n.mysql-backup")
 
             return None
         case "restore":
