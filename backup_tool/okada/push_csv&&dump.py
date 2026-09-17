@@ -23,27 +23,57 @@ import shutil
 import zipfile
 import time
 import boto3
+import unicodedata
 
-
-"""
-# 接続設定
-config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '0426',
-    'charset': 'utf8mb4'
-}
-"""
 
 #本人のデータに合わせる
 # プレイヤーに接続情報を入力させる
 print("--- MySQLの接続情報を入力してください ---")
-config = {
-    'host': input("ホスト名 (例: localhost): ") or "localhost",
-    'user': input("ユーザー名(例:root): ")or"root",
-    'password': input("パスワード: "),
-    'charset': input("型指定(例:utf8mb4): ")or "utf8mb4"
-}
+
+while True:
+    d = input("前回使用したデータを使用しますか？ (y/n): ").lower()
+    d = unicodedata.normalize("NFKC", d).lower()
+    if d in ["y", "n"]:
+        break
+    print("y か n を入力してください")
+    
+CONFIG_FILE = Path(__file__).resolve().parent / "input_data.txt"
+if d=='n':
+
+        config = {
+                'host': input("ホスト名 (例: localhost): ") or "localhost",
+                'user': input("ユーザー名(例:root): ")or"root",
+                'password': input("パスワード: "),
+                'charset': input("型指定(例:utf8mb4): ")or "utf8mb4"
+            }
+        while True:
+            reg = input("次回の登録を簡略化するために登録しますか？ (y/n): ")
+            reg = unicodedata.normalize("NFKC", reg).lower()
+
+            if reg in ["y", "n"]:
+                break
+            print("y か n を入力してください")
+        if reg == 'y':
+            with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+                f.write(
+                    f"{config['host']}\n"
+                    f"{config['user']}\n"
+                    f"{config['password']}\n"
+                    f"{config['charset']}\n"
+                )
+            print("登録しました。"'\n'f"保存先: {CONFIG_FILE}")
+        else:
+            print("登録キャンセルしました。")
+    
+else:
+       with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                lines = [line.strip() for line in f.readlines()]
+                config = {
+                            'host': lines[0],
+                            'user': lines[1],
+                            'password': lines[2],
+                            'charset': lines[3]
+                            }
 
 try:
     print("\nデータベースに接続中...")
@@ -61,8 +91,6 @@ finally:
         cursor.close()
     if 'conn' in locals() and conn.is_connected():
         conn.close()
-
-
 
 try:
     
@@ -106,9 +134,9 @@ try:
         databases = cursor.fetchall()
         print("=== データベース一覧 ===")
         for i, db in enumerate(databases, start=1):
-            print(f"{i}: {db[0]}")
+            print(f"\033[31m{i}\033[0m {db[0]}")
 
-        choice = int(input("使用するデータベース番号を入力してください: "))
+        choice = int(input("使用するデータベース"+'\033[31m'+"番号"+'\033[0m'+"を入力してください:"))  #('\033[31m'+'赤色'+'\033[0m')
         selected_db = databases[choice - 1][0]
         # データベース切替
         cursor.execute(f"USE `{selected_db}`")
@@ -287,7 +315,7 @@ except Error as e:
 
 
 #aws
-
+#パケット自動生成機能ほしい　日程固定かな
 session = boto3.Session(
     profile_name="internship",
     region_name="ap-northeast-1"
