@@ -112,8 +112,8 @@ S3_BUCKET=
                 mode="r+", encoding="utf-8"
             ) as gi:
                 content = gi.read()
-                if not ".mysql-backup" in content:
-                    gi.writelines("\n.mysql-backup")
+                if not ".mysql-backup/" in content:
+                    gi.writelines("\n.mysql-backup/")
 
             return None
         case "restore":
