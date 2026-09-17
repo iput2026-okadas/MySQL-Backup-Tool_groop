@@ -1,11 +1,17 @@
 
 # libraries
 import zipfile
+from zipfile import ZipFile
 import json
 import csv
 
+from collections import deque
+
 import mysql.connector
 from mysql.connector import MySQLConnection
+
+from multiprocessing import Pool, cpu_count
+
 
 # self-implementations
 from backup_tool.config import MySQLConfig
@@ -85,14 +91,15 @@ create database {database_name}
                     f_csv = [line.decode('utf-8') for line in zf_csv.readlines()]
                     r_csv = csv.reader(f_csv)
 
-                    csv_lines = list(r_csv)
+                    csv_list = list(r_csv)
+                    csv_lines = deque(csv_list)
 
-                    names = csv_lines.pop(0)
-                    types = csv_lines.pop(0)
+                    names = csv_lines.popleft()
+                    types = csv_lines.popleft()
 
                     insert = f"insert into {table} ("
                     insert += f"{",".join(names)}) values "
-                    csv_line = csv_lines.pop(0)
+                    csv_line = csv_lines.popleft()
                     insert += f"({",".join(csv_line)})"
                     for csv_line in csv_lines:
                         insert += f", ({",".join(csv_line)})"
@@ -132,37 +139,141 @@ create database {database_name}
     COLLATE utf8mb4_0900_ai_ci;
 """)
 
-                cursor.execute(f"use {database_name};")
+                connection.commit()
+                cursor.close()
+                connection.close()
 
-                for table in mnfst_json["tables"]:
-                    sql = open(f"{rstr_from}/schema/{table}.sql", mode="r", encoding="utf-8")
-
-                    cursor.execute(sql.read())
-
-                    f_csv = open(f"{rstr_from}/data/{table}.csv", mode="r", encoding="utf-8")
-                    r_csv = csv.reader(f_csv)
-
-                    csv_lines = list(r_csv)
-
-                    names = csv_lines.pop(0)
-                    types = csv_lines.pop(0)
-
-                    insert = f"insert into {table} ("
-                    insert += f"{",".join(names)}) values "
-                    csv_line = csv_lines.pop(0)
-                    insert += f"({",".join(csv_line)})"
-                    for csv_line in csv_lines:
-                        insert += f", ({",".join(csv_line)})"
-                    insert += ";"
-                    cursor.execute(insert)
-
-
-
-        connection.commit()
+                args = [(
+                    mysql_config,
+                    rstr_from,
+                    database_name,
+                    t,
+                ) for t in mnfst_json["tables"]]
+                n = cpu_count()
+                with Pool(processes=n) as p:
+                    p.starmap(restore_4_single_table, args)
+                    
     except Exception as e:
         print(e)
 
-    finally:
+def restore_4_single_table(
+    mysql_config: MySQLConfig,
+    rstr_from: str,
+    database_name: str,
+    table: str,
+) -> None:
+    print(table)
 
-        cursor.close()
-        connection.close()
+    connection = mysql.connector.connect(
+        host=mysql_config.host,
+        port=mysql_config.port,
+        user=mysql_config.user,
+        password=mysql_config.password,
+        database=mysql_config.database,
+        charset="utf8mb4",
+        use_unicode=True,
+        autocommit=False,
+    )
+    cursor = connection.cursor()
+    cursor.execute(f"use {database_name};")
+
+    sql = open(f"{rstr_from}/schema/{table}.sql", mode="r", encoding="utf-8")
+    cursor.execute(sql.read())
+
+    f_csv = open(f"{rstr_from}/data/{table}.csv", mode="r", encoding="utf-8")
+    r_csv = csv.reader(f_csv)
+    csv_list = list(r_csv)
+    csv_lines = deque(csv_list)
+
+    names = csv_lines.popleft()
+    types = csv_lines.popleft()
+
+    insert = f"insert into {table} ("
+    insert += f"{",".join(names)}) values "
+    csv_line = csv_lines.popleft()
+    insert += f"({",".join(csv_line)})"
+    count = 1
+    while csv_lines:
+        csv_line = csv_lines.popleft()
+        insert += f", ({",".join(csv_line)})"
+        count += 1
+        if count % 777 == 0:
+            if len(insert.encode("utf-8")) >= 10 * 1024 * 1024:
+                print("aaaa")
+                insert += ";"
+                cursor.execute(insert)
+                insert = f"insert into {table} ("
+                insert += f"{",".join(names)}) values "
+                csv_line = csv_lines.popleft()
+                insert += f"({",".join(csv_line)})"
+            count = 1
+
+    insert += ";"
+    cursor.execute(insert)
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+        
+def restore_4_single_table_zip(
+    mysql_config: MySQLConfig,
+    rstr_from: str,
+    database_name: str,
+    table: str,
+    zf: ZipFile
+) -> None:
+    print(table)
+
+    connection = mysql.connector.connect(
+        host=mysql_config.host,
+        port=mysql_config.port,
+        user=mysql_config.user,
+        password=mysql_config.password,
+        database=mysql_config.database,
+        charset="utf8mb4",
+        use_unicode=True,
+        autocommit=False,
+    )
+    cursor = connection.cursor()
+    cursor.execute(f"use {database_name};")
+
+    zf_sql = zf.open(f"schema/{table}.sql", mode="r")
+    cursor.execute(zf_sql.read().decode("utf-8"))
+
+    zf_csv = zf.open(f"data/{table}.csv", mode="r")
+    f_csv = [line.decode('utf-8') for line in zf_csv.readlines()]
+    r_csv = csv.reader(f_csv)
+
+    csv_list = list(r_csv)
+    csv_lines = deque(csv_list)
+
+    names = csv_lines.popleft()
+    types = csv_lines.popleft()
+
+    insert = f"insert into {table} ("
+    insert += f"{",".join(names)}) values "
+    csv_line = csv_lines.popleft()
+    insert += f"({",".join(csv_line)})"
+    count = 1
+    while csv_lines:
+        csv_line = csv_lines.popleft()
+        insert += f", ({",".join(csv_line)})"
+        count += 1
+        if count % 777 == 0:
+            if len(insert.encode("utf-8")) >= 10 * 1024 * 1024:
+                print("aaaa")
+                insert += ";"
+                cursor.execute(insert)
+                insert = f"insert into {table} ("
+                insert += f"{",".join(names)}) values "
+                csv_line = csv_lines.popleft()
+                insert += f"({",".join(csv_line)})"
+            count = 1
+
+    insert += ";"
+    cursor.execute(insert)
+    connection.commit()
+
+    cursor.close()
+    connection.close()
