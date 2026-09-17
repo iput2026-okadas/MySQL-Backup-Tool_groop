@@ -62,49 +62,35 @@ def restore_from_manifest(
                 cursor.execute(f"show databases like \'{database_name}\';")
                 is_exist = cursor.fetchall()
                 if is_exist:
-                    print(f"are you sure to replace the database?: {database_name}")
+                    print(f"you wanna replace or add data?: into")
                     ans = ""
-                    while not (ans == "y" or ans == "n"):
-                        ans = input("y/n: ")
+                    while not (ans == "r" or ans == "a"):
+                        ans = input("r/a: ")
                     match ans:
-                        case "y":
-                            print("yes")
-                        case "n":
-                            print("no")
-                            return None
-                        case _: print("aaaaaaaaaaaaaaaaaaaaaa")
-
-                cursor.execute(f"drop database if exists {database_name};")
-                cursor.execute(f"""
+                        case "r":
+                            print("replacing")
+                            cursor.execute(f"drop database if exists {database_name};")
+                            cursor.execute(f"""
 create database {database_name}
     character set utf8mb4
     COLLATE utf8mb4_0900_ai_ci;
 """)
+                        case "a":
+                            print("adding")
+                        case _: print("aaaaaaaaaaaaaaaaaaaaaa")
 
-                cursor.execute(f"use {database_name};")
+
+                connection.commit()
+                cursor.close()
+                connection.close()
 
                 for table in mnfst_json["tables"]:
-                    zf_sql = zf.open(f"schema/{table}.sql", mode="r")
-                    cursor.execute(zf_sql.read().decode("utf-8"))
-
-                    zf_csv = zf.open(f"data/{table}.csv", mode="r")
-                    f_csv = [line.decode('utf-8') for line in zf_csv.readlines()]
-                    r_csv = csv.reader(f_csv)
-
-                    csv_list = list(r_csv)
-                    csv_lines = deque(csv_list)
-
-                    names = csv_lines.popleft()
-                    types = csv_lines.popleft()
-
-                    insert = f"insert into {table} ("
-                    insert += f"{",".join(names)}) values "
-                    csv_line = csv_lines.popleft()
-                    insert += f"({",".join(csv_line)})"
-                    for csv_line in csv_lines:
-                        insert += f", ({",".join(csv_line)})"
-                    insert += ";"
-                    cursor.execute(insert)
+                    restore_4_single_table_zip(
+                        mysql_config=mysql_config,
+                        database_name=database_name,
+                        table=table,
+                        zf=zf
+                    )
 
 
 
@@ -120,24 +106,22 @@ create database {database_name}
                 cursor.execute(f"show databases like \'{database_name}\';")
                 is_exist = cursor.fetchall()
                 if is_exist:
-                    print(f"are you sure to replace the database?: {database_name}")
+                    print(f"you wanna replace or add data?: into")
                     ans = ""
-                    while not (ans == "y" or ans == "n"):
-                        ans = input("y/n: ")
+                    while not (ans == "r" or ans == "a"):
+                        ans = input("r/a: ")
                     match ans:
-                        case "y":
-                            print("yes")
-                        case "n":
-                            print("no")
-                            return None
-                        case _: print("aaaaaaaaaaaaaaaaaaaaaa")
-
-                cursor.execute(f"drop database if exists {database_name};")
-                cursor.execute(f"""
+                        case "r":
+                            print("replacing")
+                            cursor.execute(f"drop database if exists {database_name};")
+                            cursor.execute(f"""
 create database {database_name}
     character set utf8mb4
     COLLATE utf8mb4_0900_ai_ci;
 """)
+                        case "a":
+                            print("adding")
+                        case _: print("aaaaaaaaaaaaaaaaaaaaaa")
 
                 connection.commit()
                 cursor.close()
@@ -162,7 +146,7 @@ def restore_4_single_table(
     database_name: str,
     table: str,
 ) -> None:
-    print(table)
+    print(f"restoring a table: {table}")
 
     connection = mysql.connector.connect(
         host=mysql_config.host,
@@ -199,7 +183,6 @@ def restore_4_single_table(
         count += 1
         if count % 777 == 0:
             if len(insert.encode("utf-8")) >= 10 * 1024 * 1024:
-                print("aaaa")
                 insert += ";"
                 cursor.execute(insert)
                 insert = f"insert into {table} ("
@@ -218,12 +201,11 @@ def restore_4_single_table(
         
 def restore_4_single_table_zip(
     mysql_config: MySQLConfig,
-    rstr_from: str,
     database_name: str,
     table: str,
     zf: ZipFile
 ) -> None:
-    print(table)
+    print(f"restoring a table: {table}")
 
     connection = mysql.connector.connect(
         host=mysql_config.host,
@@ -262,7 +244,6 @@ def restore_4_single_table_zip(
         count += 1
         if count % 777 == 0:
             if len(insert.encode("utf-8")) >= 10 * 1024 * 1024:
-                print("aaaa")
                 insert += ";"
                 cursor.execute(insert)
                 insert = f"insert into {table} ("
